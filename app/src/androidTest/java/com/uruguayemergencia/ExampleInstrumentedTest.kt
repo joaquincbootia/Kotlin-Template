@@ -1,4 +1,4 @@
-package com.example.uruguayemergencia
+package com.uruguayemergencia
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.example.uruguayemergencia
+package com.uruguayemergencia
 
 import org.junit.Test
 

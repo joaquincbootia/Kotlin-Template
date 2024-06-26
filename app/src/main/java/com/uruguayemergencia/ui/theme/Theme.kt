@@ -1,4 +1,4 @@
-package com.example.uruguayemergencia.ui.theme
+package com.uruguayemergencia.ui.theme
 
 import android.app.Activity
 import android.os.Build
