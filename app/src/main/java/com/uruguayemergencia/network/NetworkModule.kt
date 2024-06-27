@@ -6,40 +6,65 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.uruguayemergencia.util.constants.Constants.BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.uruguayemergencia.data.local.PreferenceDataStoreConstants.USER_TOKEN_KEY
+import com.uruguayemergencia.network.api.services.PostMockService
+import com.uruguayemergencia.network.api.services.UserMockService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+interface UnauthorizedAccessHandler {
+    fun handleUnauthorizedAccess()
+}
+
 object NetworkModule {
 
-    private lateinit var chuckerCollector: ChuckerCollector
-    private lateinit var chuckerInterceptor: ChuckerInterceptor
-    lateinit var retrofit: Retrofit
+    private lateinit var appContext: Context
+    private lateinit var unauthorizedAccessHandler: UnauthorizedAccessHandler
+
+    fun initialize(context: Context, handler: UnauthorizedAccessHandler) {
+        appContext = context
+        unauthorizedAccessHandler = handler
+    }
+
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 
-    fun initRetrofit(context: Context) {
-        chuckerCollector = ChuckerCollector(context)
-        chuckerInterceptor = ChuckerInterceptor.Builder(context)
-            .collector(chuckerCollector)
-            .maxContentLength(250_000L)
-            .redactHeaders("Authorization")
-            .alwaysReadResponseBody(true)
-            .build()
-
-        // Build OkHttpClient with the chuckerInterceptor
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(chuckerInterceptor)
-            // Other OkHttpClient configuration...
-            .build()
-
-        // Build retrofit with the configured OkHttpClient
-        retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient) // Add the configured OkHttpClient
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+    private val okHttpClient: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val originalRequest = chain.request()
+                val requestBuilder = originalRequest.newBuilder()
+                val token = USER_TOKEN_KEY
+                if (token != null) {
+                    requestBuilder.addHeader("Authorization", "Bearer $token")
+                }
+                val request = requestBuilder.build()
+                val response = chain.proceed(request)
+                if (response.code == 401) {
+                    unauthorizedAccessHandler.handleUnauthorizedAccess()
+                }
+                response
+            }
+            //.addInterceptor(ChuckerInterceptor.Builder(appContext)
+            //    .collector(ChuckerCollector(appContext))
+            //    .maxContentLength(250_000L)
+            //    .redactHeaders(emptySet())
+            //    .alwaysReadResponseBody(true)
+            //    .build())
             .build()
     }
+
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(okHttpClient)
+            .build()
+    }
+
+    val userMockService: UserMockService = retrofit.create(UserMockService::class.java)
+    val postMockService: PostMockService = retrofit.create(PostMockService::class.java)
 
 }
