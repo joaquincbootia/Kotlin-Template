@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.uruguayemergencia.ui.components.SpinnerTaboo
+import com.uruguayemergencia.ui.components.SpinnerCustom
 
 @Composable
 fun LoadingScreen() {
@@ -23,7 +23,7 @@ fun LoadingScreen() {
         Box(
             modifier = Modifier.size(48.dp),
         ) {
-            SpinnerTaboo()
+            SpinnerCustom()
         }
     }
 }

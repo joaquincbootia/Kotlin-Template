@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.pow
 
 @Composable
-fun SpinnerTaboo(
+fun SpinnerCustom(
     size: Dp = 48.dp, // spinner size
     sweepAngle: Float = 160f, // angle (lenght) of spinner arc
     strokeWidth: Dp = 6.dp,
@@ -112,5 +112,5 @@ fun SpinnerTaboo(
 @Composable
 @Preview
 fun LoadingViewPreview() {
-    SpinnerTaboo()
+    SpinnerCustom()
 }

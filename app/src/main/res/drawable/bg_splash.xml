@@ -6,6 +6,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_taboo_questions" />
+            android:src="@drawable/ic_questions" />
     </item>
 </layer-list>

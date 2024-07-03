@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TextFieldTaboo(
+fun TextFieldCustom(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
@@ -70,7 +70,7 @@ fun TextFieldTaboo(
 @Composable
 fun SingleLineTextFieldPreview() {
     var name by remember { mutableStateOf("") }
-    TextFieldTaboo(
+    TextFieldCustom(
         value = name,
         onValueChange = { newName ->
             name = newName

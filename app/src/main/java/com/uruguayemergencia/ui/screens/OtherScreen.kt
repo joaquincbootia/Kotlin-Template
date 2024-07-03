@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,7 +26,6 @@ import com.uruguayemergencia.ui.components.HeaderTitle
 import com.uruguayemergencia.ui.components.MainFloatingActionButton
 import com.uruguayemergencia.network.models.Result
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.uruguayemergencia.ui.components.SpinnerTaboo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

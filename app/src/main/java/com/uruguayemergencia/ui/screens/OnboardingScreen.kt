@@ -40,7 +40,7 @@ fun OnboardingScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_taboo_questions),
+            painter = painterResource(id = R.drawable.ic_questions),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
