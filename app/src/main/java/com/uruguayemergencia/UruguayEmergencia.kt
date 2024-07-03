@@ -13,6 +13,10 @@ class UruguayEmergencia : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        NetworkModule.initialize(this, object : UnauthorizedAccessHandler {
+            override fun handleUnauthorizedAccess() {
+            }
+        })
         preferenceDataStoreHelper = PreferenceDataStoreHelper(this)
     }
 }

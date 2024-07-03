@@ -30,7 +30,7 @@ fun AppNavigation() {
     val dataStore = UruguayEmergencia.preferenceDataStoreHelper
     val hasToken by rememberUpdatedState(false)
 
-    NetworkModule.initialize(LocalContext.current, object : UnauthorizedAccessHandler {
+    NetworkModule.updateUnauthorizedAccessHandler(object : UnauthorizedAccessHandler {
         override fun handleUnauthorizedAccess() {
             MainScope().launch {
                 navController.navigate(AppScreens.OnboardingScreen.route)

@@ -5,11 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,11 +27,16 @@ import com.uruguayemergencia.ui.components.HeaderTitle
 import com.uruguayemergencia.ui.components.MainFloatingActionButton
 import com.uruguayemergencia.network.models.Result
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.uruguayemergencia.ui.components.SpinnerTaboo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OtherScreen(navController: NavController, usersViewModel: UsersViewModel = viewModel()) {
     val userResultState = usersViewModel.getUserResult.collectAsState()
+
+    LaunchedEffect(Unit) {
+        usersViewModel.fetchUserData()
+    }
 
     Scaffold(
         topBar = { HeaderTitle(stringResource(R.string.other_screen)) },
@@ -42,16 +48,16 @@ fun OtherScreen(navController: NavController, usersViewModel: UsersViewModel = v
             ) {
                 when (val result = userResultState.value) {
                     is Result.Success -> {
-                        // Display UI for successful response
-                        // Example: Text(result.data.toString())
                         OtherBody(navController, result.data)
                     }
                     is Result.Error -> {
-                        // Display UI for error state
-                        // Example: Text(result.errorMessage)
+                        Text(
+                            text = "Error: ${result.errorMessage}",
+                            modifier = Modifier.padding(16.dp)
+                        )
                     }
                     Result.Loading -> {
-                        // Display loading UI
+                        LoadingScreen()
                     }
                 }
             }
@@ -63,11 +69,6 @@ fun OtherScreen(navController: NavController, usersViewModel: UsersViewModel = v
             MainFloatingActionButton(onClick = { })
         },
     )
-
-    // Fetch user data when the screen composable is first launched
-    // Optionally, you can call this method wherever appropriate in your app flow
-    // Remember to handle re-fetching based on your app's requirements
-    usersViewModel.fetchUserData()
 }
 
 @Composable

@@ -27,11 +27,18 @@ import kotlin.math.pow
 fun SpinnerTaboo(
     size: Dp = 48.dp, // spinner size
     sweepAngle: Float = 160f, // angle (lenght) of spinner arc
-    strokeWidth: Dp = 8.dp,
+    strokeWidth: Dp = 6.dp,
     strokeVariationMultiplier: Float = 1.5f
 ) {
     val gradient = Brush.sweepGradient(
-        colors = listOf(Color.Red, Color.Yellow, Color.Green, Color.Blue, Color.Magenta, Color.Red),
+        colors = listOf(
+            Color(0xFF64B5F6),
+            Color(0xFF2196F3),
+            Color(0xFF64B5F6),
+            Color(0xFFBBDEFB),
+            Color(0xFFE3F2FD),
+            Color(0xFF64B5F6)
+        ),
     )
     val transition = rememberInfiniteTransition(label = "SpinnerRotation")
 

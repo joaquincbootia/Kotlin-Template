@@ -16,8 +16,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val lightColorScheme = lightColorScheme(
-    primary = primaryPurpleLight,
-    secondary = secondaryCyanLight,
+    primary = primaryLight,
+    secondary = secondaryLight,
     tertiary = tertiaryLight,
     background = backgroundLight,
     onBackground = onBackgroundLight,
@@ -27,8 +27,8 @@ private val lightColorScheme = lightColorScheme(
 )
 
 private val darkColorScheme = darkColorScheme(
-    primary = primaryPurpleDark,
-    secondary = secondaryCyanDark,
+    primary = primaryDark,
+    secondary = secondaryDark,
     tertiary = tertiaryDark,
     background = backgroundDark,
     onBackground = onBackgroundDark,
